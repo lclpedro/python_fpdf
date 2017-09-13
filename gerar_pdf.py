@@ -231,3 +231,112 @@ def gerarPdfProjeto(cod_projeto):
 	pdfgerado.headers.set('Content-Type', 'application/pdf')
 	
 	return pdfgerado
+
+@app.route('/api/processo/capa/<cod_processo>', methods=['GET'])
+def impressaoCapaProcesso(cod_processo):
+	class PDF(FPDF):
+		def footer(self):
+			self.set_y(-20)
+			self.set_font('Arial','I', 8)
+			# self.multi_cell(0,10,'Página'+str(self.page_no())+'/{nb}',0,0,'L')
+
+	pdf = PDF()
+	# pdf.alias_nb_pages()
+	pdf.add_page()
+	pdf.set_font('Arial', 'B', 12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'LOGO \n\
+		ESTADO DO ACRE\n\
+		Secretaria de Estado de Desenvolvimento da\n\
+		Indústria, do Comércio, e dos Serviços Sustentáveis - SEDENS\n\
+		Departamento de Política de Incentivos às Atividades\n\
+		Industriais do Estado do Acre - COPIAI/AC', border=1, align='C')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'PROCESSO:        DATA:        NÚMERO:', border=1, align='C')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'INTERESSADO:', border=1, align='C')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'ASSUNTO:', border=1, align='C')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'ANEXOS:', border=1, align='C')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'MOVIMENTO DO PROCESSO', align='C')
+	pdf.ln(3)
+	pdf.cell(63.3,5,'DE',1,0,'C')
+	pdf.cell(63.3,5,'DATA',1,0,'C')
+	pdf.cell(63.3,5,'PARA',1,1,'C')
+	pdf.cell(63.3,5,'',1,0,'L')
+	pdf.cell(21.1,5,'',1,0,'L')
+	pdf.cell(21.1,5,'',1,0,'L')
+	pdf.cell(21.1,5,'',1,0,'L')
+	pdf.cell(63.3,5,'',1,1,'L')
+	
+
+	fn = 'download.pdf'
+	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
+	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
+	pdfgerado.headers.set('Content-Type', 'application/pdf')
+	
+	return pdfgerado
+
+@app.route('/api/documentacao_necessaria/gerarpdf', methods=['GET'])
+def impressaoDocNecessario():
+	class PDF(FPDF):
+		def footer(self):
+			self.set_y(-20)
+			self.set_font('Arial','I', 8)
+			# self.multi_cell(0,10,'Página'+str(self.page_no())+'/{nb}',0,0,'L')
+
+	pdf = PDF()
+	# pdf.alias_nb_pages()
+	pdf.add_page()
+	pdf.ln(5)
+	pdf.set_font('Arial', 'B', 16)
+	pdf.multi_cell(180,5,'        Para concorrer aos benefícios oferecidos pela COPIAI,\
+		a empresa interessada deverá:', align='C')
+	pdf.ln(8)
+	pdf.set_font('Arial', 'B', 12)
+	pdf.multi_cell(180,5,'A) Está consituída no Estado do Acre e efetivamente classificada\
+		como Indústria;')
+	pdf.multi_cell(180,5,'B) Protocolar na COPIAI Projeto Técnico - Plano de Negócios,\
+		contendo os documentos listados abaixo, solicitando enquadramento em uma ou ambas\
+		as Leis do Incentivo:')
+	pdf.set_font('Arial', '', 12)
+	pdf.multi_cell(180,5,'        * 1.358/2000 - Financiamento de ICMS;')
+	pdf.multi_cell(180,5,'        * 1.358/2000 - Concessão de Áreas;')
+	pdf.set_font('Arial', 'B', 12)
+	pdf.multi_cell(180,5,'Documentos:')
+	pdf.set_font('Arial', '', 12)
+	pdf.multi_cell(180,5,'     I. Contrato Social e alterações devidamente registrados na JUCEAC - Junta\
+		Comercial do Estado do Acre;')
+	pdf.multi_cell(180,5,'     II. Cadastro Nacional de Pessoa Jurídica - CNPJ;')
+	pdf.multi_cell(180,5,'     III. FAC - Inscrição Estadual;')
+	pdf.multi_cell(180,5,'     IV. Certidões Negativas de Débitos Fiscais no âmbito Federal, Estadual e\
+		Municipal;')
+	pdf.multi_cell(180,5,'     V. Certidões Negativas do Cartório de Protestos e do Cartório Distribuidor;')
+	pdf.multi_cell(180,5,'     VI. Alvará de Localização e Funcionamento;')
+	pdf.multi_cell(180,5,'     VII. Balanço de Abertura, quando se tratar de empresa com menos de um\
+		ano de criação;')
+	pdf.multi_cell(180,5,'     VIII. Balanço e Demonstrativo de Resultados do último exercício;')
+	pdf.multi_cell(180,5,'     IX. Licença Ambiental fornecida pelo IMAC;')
+	pdf.multi_cell(180,5,'     X. Notas Fiscais devidamente registradas na SEFAZ/AC ou Escrituras\
+		Públicas, referentes ao imobilizado atual (exceto terrenos e veículos de\
+		passeio) (Somente para o benefício da Lei nº 1.358/2000);')
+	pdf.multi_cell(180,5,'     XI Demonstrativo de arrecadação mensal - DAM (Últimos 12 meses)\
+		para as empresas em funcionamento e em regime normal, ou DASN para\
+		optantes do Simples Nacional (Somente para o benefício da Lei nº 1.358/2000)')
+	pdf.multi_cell(180,5,'     XII. Projeto Arquitetônico, contendo ART, plantas, memorial descritivo,\
+		orçamento e cronograma físico-financeiro da obra a ser realizada\
+		(Somente para o benefício da Lei nº 1.359/2000);')
+	pdf.multi_cell(180,5,'     XIII. Projeto de Segurança Contra Incêndio e Pânico aprovado pelo Corpo de\
+		Bombeiros (Somente para o benefício da Lei nº 1.359/2000).')
+	pdf.multi_cell(180,5,'     VIII. Balanço e Demonstrativo de Resultados do último exercício;')
+	pdf.set_font('Arial', 'B', 12)
+	pdf.ln(3)
+
+	fn = 'download.pdf'
+	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
+	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
+	pdfgerado.headers.set('Content-Type', 'application/pdf')
+	
+	return pdfgerado
