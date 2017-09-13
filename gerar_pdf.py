@@ -388,3 +388,142 @@ def impressaoRequerimento():
 	pdfgerado.headers.set('Content-Type', 'application/pdf')
 	
 	return pdfgerado
+
+@app.route('/api/processo/checklist/<cod_processo>', methods=['GET'])
+def impressaoCheckList(cod_processo):
+	class PDF(FPDF):
+		def header(self):
+			self.set_font('Arial', '', 9)
+			self.multi_cell(190,4,'LOGO \n\
+				ESTADO DO ACRE\n\
+				Secretaria de Estado de Desenvolvimento da\n\
+				Indústria, do Comércio, e dos Serviços Sustentáveis - SEDENS\n\
+				Departamento de Política de Incentivos às Atividades\n\
+				Industriais do Estado do Acre - COPIAI/AC', align='C')
+			self.ln(3)
+
+		def footer(self):
+			self.set_y(-20)
+			self.set_font('Arial','', 8)
+			self.cell(20)
+			self.multi_cell(90,4, '    Av. Getúlio Vargas, nº 1782 - Bosque\n\
+				Rio Branco-Acre - Brasil - CEP. 69. 900 - 610\n\
+				Tel. COPIAI: (68) 3215-2396 / Gabinete: (68) 3223-1281', align='L')
+			self.cell(100)
+			self.multi_cell(90,4, 'LOGO', align='C')
+
+	pdf = PDF()
+	pdf.add_page()
+	pdf.ln(3)
+	pdf.set_font('Arial', '', 9)
+	pdf.set_font('Arial', 'B', 9)
+	pdf.multi_cell(190,4,'CHECK-LIST DOCUMENTAL DO PROCESSO',align='C')
+	pdf.multi_cell(190,8,'NOME DA EMPRESA:', border=1, align='L')
+	pdf.set_font('Arial', '', 9)
+	pdf.cell(90,8,'Documentos:',1,0,'L')
+	pdf.cell(43,4,'Anexado ao processo',1,0,'L')
+	pdf.cell(57,8,'Observações:',1,1,'L')
+	pdf.cell(90)
+	pdf.set_xy(100,56)
+	pdf.cell(21.5,4,'Sim',1,0,'L')
+	pdf.cell(21.5,4,'Não',1,1,'L')
+	pdf.set_font('Arial', '', 8)
+	pdf.cell(90,4,'Projeto Técnico - Econômico - Financeiro (Plano de Negócios).',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.multi_cell(57,4,'',1,1,'L')
+	pdf.cell(90,4,'Contrato social e alterações devidamente registradas na JUCEAC',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.multi_cell(57,4,'',1,1,'L')
+	pdf.cell(90,4,'Cadastro Nacional de Pessoa Jurídica - CNPJ',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.multi_cell(57,4,'',1,1,'L')
+	pdf.cell(90,4,'Inscrição Estadual - FAC',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.multi_cell(57,4,'',1,1,'L')
+	pdf.cell(90,4,'Certidão Negativa de Débito Federal',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.multi_cell(57,4,'',1,1,'L')
+	pdf.cell(90,4,'Certidão Negativa de Débito Estadual',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.multi_cell(57,4,'',1,1,'L')
+	pdf.cell(90,4,'Certidão Negativa de Débito Municipal',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.multi_cell(57,4,'',1,1,'L')
+	pdf.cell(90,4,'Certidão Negativa do Cartório de Protesto',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.multi_cell(57,4,'',1,1,'L')
+	pdf.cell(90,4,'Certidão Negativa do Cartório Distribuidor',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.multi_cell(57,4,'',1,1,'L')
+	pdf.multi_cell(90,3,'Balanço de Abertura, quando se tratar de empresa com menos de um ano de criação.',1,0,'L')
+	pdf.set_xy(100,96)
+	pdf.cell(21.5,6,'',1,0,'L')
+	pdf.cell(21.5,6,'',1,0,'L')
+	pdf.cell(57,6,'',1,1,'L')
+	pdf.cell(90,4,'Balanço e demonstrativo de resultado do último exercício',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.cell(21.5,4,'',1,0,'L')
+	pdf.multi_cell(57,4,'',1,1,'L')
+	pdf.cell(90,18,'Alvará de Localização e Funcionamento',1,0,'L')
+	pdf.cell(21.5,18,'',1,0,'L')
+	pdf.cell(21.5,18,'',1,0,'L')
+	pdf.multi_cell(57,3,'Requerente possui prazo de até sessenta dias\
+		após a assinatura do Termo de Acordo/Escritura\
+		Pública de Concessão para apresentar o\
+		documento, conforme texto do Art. 1º dos\
+		Decretos nº 12.360 e 12.361, ambos de 23 de\
+		junho de 2005.',1,1,'L')
+	pdf.cell(90,18,'Licensa Ambiental do IMAC',1,0,'L')
+	pdf.cell(21.5,18,'',1,0,'L')
+	pdf.cell(21.5,18,'',1,0,'L')
+	pdf.multi_cell(57,3,'Requerente possui prazo de até sessenta dias\
+		após a assinatura do Termo de Acordo/Escritura\
+		Pública de Concessão para apresentar o\
+		documento, conforme texto do Art. 1º dos\
+		Decretos nº 12.360 e 12.361, ambos de 23 de\
+		junho de 2005.',1,1,'L')
+	pdf.multi_cell(90,3,'Demonstrativo de Arrecadação Mensal - DAM (últimos 12 meses) para as\
+		empresas em funcionamento e em regime normal, ou DASN para optantes\
+		do Simples Nacional.',1,0,'L')
+	pdf.set_xy(100,142)
+	pdf.cell(21.5,9,'',1,0,'L')
+	pdf.cell(21.5,9,'',1,0,'L')
+	pdf.cell(57,9,'',1,1,'L')
+	pdf.multi_cell(90,3,'Notas Fiscais devidamente registradas na SEFAZ/AC ou Escrituras Públicas,\
+		referentes ao imobilizado atual (exceto terrenos e veículos de passeio).',1,0,'L')
+	pdf.set_xy(100,151)
+	pdf.cell(21.5,9,'',1,0,'L')
+	pdf.cell(21.5,9,'',1,0,'L')
+	pdf.cell(57,9,'',1,1,'L')
+	pdf.multi_cell(90,3,'Projeto de Segurança Contra Incêndio e Pânico aprovado pelo Corpo de Bombeiros.',1,0,'L')
+	pdf.set_xy(100,160)
+	pdf.cell(21.5,6,'',1,0,'L')
+	pdf.cell(21.5,6,'',1,0,'L')
+	pdf.cell(57,6,'',1,1,'L')
+	pdf.multi_cell(90,3,'Projeto Arquitetônico, contendo ART, plantas, memorial descritivo,\
+		orçamento e cronograma físico-financeiro da obra a ser realizada.',1,0,'L')
+	pdf.set_xy(100,166)
+	pdf.cell(21.5,9,'',1,0,'L')
+	pdf.cell(21.5,9,'',1,0,'L')
+	pdf.cell(57,9,'',1,1,'L')
+	pdf.cell(90,8,'Outras informações',1,0,'L')
+	pdf.cell(100,8,'',1,1,'L')
+	pdf.multi_cell(90,8,'                       Técnico da COPIAI responsável \n \n\
+	                     Cliente em: ___/____/________',1,0,'C')
+	pdf.set_xy(100,183)
+	pdf.multi_cell(100,8,'                      Empresário/Consultor responsável pela Empresa. \n \n\
+		                 Cliente em: ___/____/________',1,1,'C')
+	fn = 'download.pdf'
+	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
+	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
+	pdfgerado.headers.set('Content-Type', 'application/pdf')
+	return pdfgerado
