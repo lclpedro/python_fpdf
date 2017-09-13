@@ -340,3 +340,51 @@ def impressaoDocNecessario():
 	pdfgerado.headers.set('Content-Type', 'application/pdf')
 	
 	return pdfgerado
+
+@app.route('/api/requerimento/gerarpdf', methods=['GET'])
+def impressaoRequerimento():
+	class PDF(FPDF):
+		def footer(self):
+			self.set_y(-20)
+			self.set_font('Arial','I', 8)
+			# self.multi_cell(0,10,'Página'+str(self.page_no())+'/{nb}',0,0,'L')
+	pdf = PDF()
+	# pdf.alias_nb_pages()
+	pdf.add_page()
+	pdf.ln(5)
+	pdf.set_font('Arial', 'B', 14)
+	pdf.multi_cell(180,5,'REQUERIMENTO', align='C')
+	pdf.set_font('Arial', '', 12)
+	pdf.multi_cell(180,5,'(Pleiteando Benefícios)', align='C')
+	pdf.ln(10)
+	pdf.multi_cell(180,5,'Ao Senhor\n(NOME DO PRESIDENTE DA COMISSÃO)', align='L')
+	pdf.multi_cell(180,5,'Presidente da Comissão da Política de Incentivos às Atividades Industriais do\
+		Estado do Acre - COPIAI/AC')
+	pdf.ln(15)
+	pdf.multi_cell(180,5,'       Senhor Presidente,\
+		A (NATUREZA JURÍDICA DA EMPRESA E RAZÃO SOCIAL DA\
+		EMPRESA), pessoa jurídica de direito privado, inscrita no CNPJ sob o nº\
+		(........), com Inscrição Estadual nº (........), e classificada no CNAE sob o nº\
+		(........) - (DESCRIÇÃO DA ATIVIDADE ECONÔMICA PRINCIPAL DA\
+		EMPRESA), solicita a concessão dos incentivos previstos na(s) Lei(s) n°\
+		(1.358/00 - incentivo fiscal, e/ou 1.359/00 - concessão de áreas), cujas\
+		caracterizações básicas, apresentamos no (PROJETO TÉCNICO/PLANO DE\
+		NEGÓCIOS OU REAVALIAÇÃO) em anexo.')
+	pdf.ln(30)
+	pdf.multi_cell(180,5,'NESTES TERMOS \nPEDE DEFERIMENTO',align='C')
+	
+	pdf.ln(30)
+	pdf.multi_cell(180,5,'Rio Branco,...........de................................de........',align='R')
+	
+	pdf.ln(15)
+	pdf.multi_cell(180,5,'___________________________________________________\nAssinatura e Carimbo',align='C')
+	pdf.ln(30)
+	pdf.multi_cell(180,5,'Obs.: O número da Lei e o respectivo artigo deverá ser preenchido de acordo\
+		com o benefício requerido.',align='C')
+
+	fn = 'download.pdf'
+	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
+	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
+	pdfgerado.headers.set('Content-Type', 'application/pdf')
+	
+	return pdfgerado
