@@ -527,3 +527,311 @@ def impressaoCheckList(cod_processo):
 	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
 	pdfgerado.headers.set('Content-Type', 'application/pdf')
 	return pdfgerado
+
+@app.route('/api/parecer_tecnico', methods=['GET'])
+def parecerTecnico():
+	class PDF(FPDF):
+		def header(self):
+			self.set_font('Arial', '', 9)
+			self.multi_cell(190,4,'LOGO \n\
+				ESTADO DO ACRE\n\
+				Secretaria de Estado de Desenvolvimento da\n\
+				Indústria, do Comércio, e dos Serviços Sustentáveis - SEDENS\n', align='C')
+			self.ln(3)
+
+		def footer(self):
+			self.set_y(-20)
+			self.set_font('Arial','', 8)
+			self.cell(10)
+			self.multi_cell(90,4, '    Av. Getúlio Vargas, nº 1782 - Bosque\n\
+				Rio Branco-Acre - Brasil - CEP. 69. 900 - 610\n\
+				Tel. COPIAI: (68) 3215-2396 / Gabinete: (68) 3223-1281', align='L')
+			self.set_font('Arial','I', 8)
+			self.multi_cell(0,10,'Página '+str(self.page_no())+'/{nb}',0,0,'L')
+	pdf = PDF()
+	pdf.add_page()
+	pdf.alias_nb_pages()
+	pdf.set_font('Arial', 'B',12)
+	pdf.multi_cell(190,5,'PARECER TÉCNICO',align='C')
+	pdf.multi_cell(190,5,'PROCESSO: Nº ',align='J')
+	pdf.multi_cell(190,5,'ASSUNTO:',align='J')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'1 -    DA SOLICITAÇÃO',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'        A (natureza jurídica da empresa e razão social da empresa), pessoa jurídica\
+		de direito privado, inscrita no CNPJ sob o nº XX.XXX.XXX/XXXX-XX, com Inscrição Estadual nº XX.XXX.XXX/XXX-XX,\
+		classificada no CNAE sob o nº XX.XX-X-XX - "(descrição da atividade econômica principal)", apresenta, para fins\
+		de análise, Plano de Negócios onde pleiteia a concessão do(s) benefício(s) previsto(s) na(s) Lei(s) n° 1.358/00\
+		- regulamentada pelo Decreto nº 4.196 de 1º de outubro de 2001, relativa à concessão de incentivos fiscais na\
+		modalidade de financiamento direto ao contribuinte, com até 95% dos saldos devedores de ICMS, conforme nota(s)\
+		fiscal(is) apresentada(s) à(s) fl(s). XX dos autos, concernente(s) à aquisição de itens para composição do ativo\
+		imobilizado; e/ou na Lei nº 1.359/00 - regulamentada pelo decreto nº 4.197 de 1º de outubro de 2001 -, relativa à\
+		concessão de um lote industrial, total de XX.XXX,XX m², localizado no (Parque Industrial/Pólo Moveleiro) de\
+		(Município) (fl. XX).',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'2 -    DA ANÁLISE DOCUMENTAL',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'        De acordo com o check-list do processo (fl. XXX) e a documentação anexada aos autos, com\
+		fundamento no(s) Art. 13º, do Anexo Único do Decreto nº 4.196 de 1º de outubro de 2001 (em caso de solicitação dos\
+		incentivos fiscais da Lei 1.358/00), e Art. 2º, Parágrafo Único, do Anexo Único do Decreto Nº 4.197 de 1º de\
+		outubro de 2001 (em caso de solicitação dos incentivos fiscais da Lei 1.359/00), atestamos que a requerente apresentou\
+		os documentos necessários e exigidos de acordo com a legislação.',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'3 -    DO ENQUADRAMENTO',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'        De acordo com as informações constantes no Projeto Técnico/Plano de Negócios, a empresa enquadra-se\
+		cumulativamente nos seguintes itens do Art. 4º, do anexo único, de ambos os regulamentos operativos das Leis nº\
+		1.358/00 e 1.359/00, respectivamente, Decreto nº 4.196 de 1º de outubro de 2001 e Decreto Nº 4.197 de 1º de\
+		outubro de 2001:',align='J')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'I.	XXXXXXXXXXX.\nII.	XXXXXXXXXXX.\nIII.	XXXXXXXXXXX', align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'4 -    ANÁLISE ECONÔMICO-FINANCEIRO',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'         TEXTO 1 (empresa sem balanço ou só com balanço de abertura):\n\n\
+		        Em razão da ausência de Balanço Patrimonial e Demonstrativo de Resultados do Exercício / Ou em caso de empresa com\
+		menos de um ano de criação/funcionamento), consideram-se suficientes as projeções informadas no Plano de Negócios\
+		à(s) fl(s). XX dos autos.\n\n\
+		        TEXTO 2 (empresa sem balanço ou só com balanço de abertura):\n\n\
+		        A empresa apresentou à fl. XX o seu Balanço de Abertura, cuja data de fechamento deu-se em XX/XX/XXXX. Como este\
+		tipo de Balanço não permite a realização de cálculos de índices econômico-financeiros, calcularemos o Ponto de\
+		Equilíbrio Contábil, fazendo uso das projeções situadas às fls. XX dos autos.\n\n\
+		        a) Ponto de Equilíbrio Contábil = Custos Fixos / % Margem Contribuição:\n',align='J')
+	pdf.set_font('Arial', 'B', 12)
+	pdf.cell(57,10,'Item',1,0,'C')
+	pdf.cell(38,10,'Atual (R$)',1,0,'C')
+	pdf.cell(19,10,'%',1,0,'C')
+	pdf.cell(57,10,'Projetada (R$)',1,0,'C')
+	pdf.cell(19,10,'%',1,1,'C')
+	pdf.set_font('Arial', '', 12)
+	pdf.cell(57,5,'Receitas',1,0,'L')
+	pdf.cell(38,5,'xx.xxx,xx',1,0,'R')
+	pdf.cell(19,5,'100%',1,0,'C')
+	pdf.cell(57,5,'xx.xxx,xx',1,0,'R')
+	pdf.cell(19,5,'100%',1,1,'C')
+	pdf.cell(57,5,'(-)Custos Variáveis',1,0,'L')
+	pdf.cell(38,5,'xx.xxx,xx',1,0,'R')
+	pdf.cell(19,5,'xx%',1,0,'C')
+	pdf.cell(57,5,'xx.xxx,xx',1,0,'R')
+	pdf.cell(19,5,'xx%',1,1,'C')
+	pdf.cell(57,5,'= Margem de Contribuição',1,0,'L')
+	pdf.cell(38,5,'xx.xxx,xx',1,0,'R')
+	pdf.cell(19,5,'xx%',1,0,'C')
+	pdf.cell(57,5,'xx.xxx,xx',1,0,'R')
+	pdf.cell(19,5,'xx%',1,1,'C')
+	pdf.cell(57,5,'(-) Custos Fixos',1,0,'L')
+	pdf.cell(38,5,'xx.xxx,xx',1,0,'R')
+	pdf.cell(19,5,'xx%',1,0,'C')
+	pdf.cell(57,5,'xx.xxx,xx',1,0,'R')
+	pdf.cell(19,5,'xx%',1,1,'C')
+	pdf.cell(57,5,'P.E Contábil (R$)',1,0,'L')
+	pdf.cell(38,5,'R$ xx.xxx,xx',1,0,'R')
+	pdf.cell(19,5,'',1,0,'C')
+	pdf.cell(57,5,'R$ xx.xxx,xx',1,0,'R')
+	pdf.cell(19,5,'',1,1,'C')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'ANÁLISE:\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'        Considerando as previsões de vendas e custos, inclusive com suas respectivas elevações,\
+		entende-se que seria necessário à requerente obter receitas aproximadas de R$ XXX.XXX,XX (por extenso) para não\
+		incorrer em prejuízos, sendo tal valor o limite para cobrir os custos.\n\n Ou...\n\nTEXTO 3 (empresa com balanço)\n\n\
+		        Para o cálculos dos índices seguintes, tomou-se como base o Balanço Patrimonial apresentado pela empresa,\
+		encerrado em XX/XX/XXXX, situado à(s) fl(s) XX dos autos.',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'        A) Liquidez Corrente:\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'        Calculada a partir da Razão entre os direitos a curto prazo da empresa (Caixas, bancos,\
+		estoques, clientes) e a as dívidas a curto prazo (Empréstimos, financiamentos, impostos, fornecedores). No Balanço\
+		estas informações são evidenciadas respectivamente como Ativo Circulante e Passivo Circulante.\n\n        Liquidez Corrente=\
+		Ativo Circulante / Passivo Circulante.',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'        B) Liquidez Seca:\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'        Similar a liquidez corrente a liquidez Seca exclui do cálculo acima os estoques, por não\
+		apresentarem liquidez compatível com o grupo patrimonial onde estão inseridos. O resultado deste índice\
+		será invariavelmente menor ao de liquidez corrente, sendo cauteloso com relação ao estoque para a liquidação\
+		de obrigações.\n\n         Liquidez Seca= (Ativo circulante - Estoques) / Passivo circulante',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'        C) Liquidez Geral:\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'        Este índice leva em consideração a situação a longo prazo da empresa, incluindo no cálculo\
+		os direitos e obrigações a longo prazo. Estes valores também são obtidos no balanço patrimonial.\n\n\
+		        Observação: A partir de 31.12.2008, em função da nova estrutura dos balanços patrimoniais promovida pela\
+		MP 449/2008, a fórmula da liquidez geral será:\n\n        Liquidez Geral = (Ativo circulante + Realizável a longo prazo)\
+		/(Passivo Circulante + Passivo não circulante) ',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'ANÁLISE:\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'        Os indicadores resultantes dos cálculos realizados demonstram que a empresa analisada\
+		teria, considerando a teoria aplicada, uma condição financeira saudável para quitar suas dívidas e cumprir\
+		seus compromissos, a curto e longo prazo.',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'5 -    INVESTIMENTO FIXO APRESENTADO\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'        De acordo com as informações do relatório em anexo (Anexo I), constante à(s) fl(s). XX, o\
+		valor total da(s) nota(s) fiscal(is) considerada(s) válida(s) nesta análise inicial, e destinada(s) à\
+		composição do ativo imobilizado da requerente é de R$ XXX.XXX,XX (por extenso), que servirá como sabe para o\
+		incentivo de financiamento de ICMS conferido da Lei nº 1.358/00. (Deve-se fazer um resumo sobre as deduções\
+		de itens das notas fiscais incompatíveis com a legislação, se houver).',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'5.1 -    TAXAS ADMINISTRATIVA:\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'        Mantendo-se o valor do investimento fixo constante neste parecer, incidirá sobre ele a taxa\
+		administrativa de 3% (três por cento) destinada à capitalização do Fundo de Desenvolvimento Sustentável - FDS,\
+		com valor de R$ XXX.XXX,XX (por extenso), a ser recolhida através do Documento de Arrecadação Estadual - DAE.\n\
+		        A empresa poderá ainda optar pelo parcelamento da taxa em até XX (XXX) vezes, com valor da parcela\
+		fixado em R$ XXX,XX (por extenso), conforme critérios da Resolução COPIAI/AC n° 003 de 11 de julho de 2003,\
+		publicada no D.O.E n° 8.577 de 14 de julho de 2003.', align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'5.2 -    Nível de Redução de ICMS Apurado:\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.cell(90,5,'Critétrios de Avaliação',1,0,'C')
+	pdf.cell(61.3,5,'Dados do Projeto',1,0,'C')
+	pdf.cell(35.7,5,'Pontuação Obtida',1,1,'C')
+	pdf.set_font('Arial', '',10)
+	pdf.multi_cell(90,5,'Quanto a quantidade de empregos.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x+5)
+	pdf.multi_cell(61.3,5,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x+5)
+	pdf.multi_cell(35.7,5,'',1,1,'C')
+	pdf.multi_cell(90,5,'Quanto ao porte da empresa.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x+5)
+	pdf.multi_cell(61.3,5,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x+5)
+	pdf.multi_cell(35.7,5,'',1,1,'C')
+	pdf.multi_cell(90,5,'Percentual participativo da mão-de-obra direta e indireta agregada ao custo da produção.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x)
+	pdf.multi_cell(61.3,x,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x)
+	pdf.multi_cell(35.7,x,'',1,1,'C')
+	pdf.multi_cell(90,5,'Quanto à utilização de matéria-prima e material secundário local ou regional, dentro dos parâmetros\
+		do desenvolvimento sustentável.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x-5)
+	pdf.multi_cell(61.3,x+5,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x-5)
+	pdf.multi_cell(35.7,x+5,'',1,1,'C')
+	pdf.multi_cell(90,5,'Quanto à produção de bens com ou sem similar no Estado.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x)
+	pdf.multi_cell(61.3,x,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x)
+	pdf.multi_cell(35.7,x,'',1,1,'C')
+	pdf.multi_cell(90,5,'Quanto à geração própria e alternativa de energia elétrica.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x)
+	pdf.multi_cell(61.3,x,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x)
+	pdf.multi_cell(35.7,x,'',1,1,'C')
+	pdf.multi_cell(90,5,'Quanto à utilização de equipamentos ou processos antipoluentes que\
+		resguardem a proteção do meio-ambiente.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x-5)
+	pdf.multi_cell(61.3,x+5,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x-5)
+	pdf.multi_cell(35.7,x+5,'',1,1,'C')
+	pdf.multi_cell(90,5,'Quanto à localização do empreendimento em regiões administrativas \
+		prioritárias e dentro dos parâmetros estabelecidos pelo ZEE.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x-5)
+	pdf.multi_cell(61.3,x+5,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x-5)
+	pdf.multi_cell(35.7,x+5,'',1,1,'C')
+	pdf.multi_cell(90,5,'Quanto à geração ou melhoria de novos produtos ou processos.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x)
+	pdf.multi_cell(61.3,x,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x)
+	pdf.multi_cell(35.7,x,'',1,1,'C')
+	pdf.multi_cell(90,5,'Quanto à formação de recursos humanos, objetivando a melhoria da qualidade e da produtividade.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x)
+	pdf.multi_cell(61.3,x,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x)
+	pdf.multi_cell(35.7,x,'',1,1,'C')
+	pdf.multi_cell(90,5,'Quanto à existência de certificados qualificados como de manejo florestal sustentável, de origem,\
+		de processo ou ambiental.',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+90,y-x-5)
+	pdf.multi_cell(61.3,x+5,'',1,0,)
+	pdf.set_xy(x+(90+61.3),y-x-5)
+	pdf.multi_cell(35.7,x+5,'',1,1,'C')
+
+	pdf.set_font('Arial','',12)
+	pdf.multi_cell(190,5,'\n        Conforme o quadro acima, a empresa foi classificada na Faixa X, com XX pontos.\
+		Dessa forma, o nível de redução a ser utilizado no abatimento dos saldos devedores do ICMS será de\
+		XX% (por extenso), com prazo para ser utilizado até 31 de dezembro de 2035, conforme o art. 1º da Lei nº 2.956,\
+		de 9 de abril de 2015, que alterou a Lei nº 1.358, de 29 de dezembro de 2000, e considerando o disposto\
+		no Decreto nº 4.196 de 1º de outubro de 2001.', align='J')
+
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'6 -    OBSERVAÇÕES COMPLEMENTARES\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'7 -    CONCLUSÃO\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'Finalizada a análise sobre o Plano de Negócios e a documentação apresentada,\
+		somos por sua APROVAÇÃO (com ou sem ressalvas) e o seu prosseguimento para a deliberação nas demais\
+		instituições que compõem a Câmara Técnica, além da própria COPIAI/AC, considerando a(s) observação(ões)\
+		disposta(s) no item X deste parecer.', align='J')
+
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'É o Parecer.\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'Rio Branco-AC xx de xxxxx de xxxx\n',align='R')
+	pdf.ln(5)
+	pdf.multi_cell(190,5,'Nome do Analista\nCargo/Função na COPIAI/AC',align='C')
+	pdf.ln(5)
+	pdf.multi_cell(190,5,'De Acordo\n Rio Branco, xx/xx/xxxx.',align='R')
+	pdf.ln(5)
+	pdf.multi_cell(190,5,'Nome do Chefe Imediato\nCargo/Função na COPIAI/AC',align='R')
+
+	fn = 'download.pdf'
+	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
+	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
+	pdfgerado.headers.set('Content-Type', 'application/pdf')
+	return pdfgerado
