@@ -835,3 +835,1070 @@ def parecerTecnico():
 	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
 	pdfgerado.headers.set('Content-Type', 'application/pdf')
 	return pdfgerado
+
+
+	@app.route('/api/roteiro', methods=['GET'])
+def impressaoRoteiro():
+	class PDF(FPDF):
+		def footer(self):
+			self.set_y(-20)
+			self.set_font('Arial','I', 8)
+			# self.multi_cell(0,10,'Página '+str(self.page_no())+'/{nb}',0,0,'L')
+
+	pdf = PDF()
+	pdf.add_page()
+	# pdf.alias_nb_pages()
+	pdf.ln(5)
+	pdf.set_font('Arial', 'B', 12)
+	pdf.multi_cell(190,5,'ROTEIRO BÁSICO PARA O PLANO DE NEGÓCIOS\n\
+		(Este é um roteiro contendo as informações mínimas que deverão ser prestadas e, de acordo com cada\
+		empreendimento, deverá ser detalhado).',align='C')
+	pdf.multi_cell(190,5,'        \nTodos os quadros demonstrativos deverão ser acompanhados das respectivas memórias\
+		de cálculo.',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'1 -    INTRODUÇÃO\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'(Definir tipo de beneficiamento a ser pleitado)', align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'2  -    A EMPRESA\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'  2.1 - Razão Social\n\
+		2.2 - Nome de Fantasia\n\
+		2.3 - Ramo de Atividade\n\
+		2.4 - Objetivo Social\n\
+		2.5 - Forma Jurídica\n\
+		2.6 - Sede e Foro\n\
+		2.7 - Endereço\n\
+		2.7.1 - Escritório\n\
+		        Telefone\n\
+		        E-mail\n\
+		2.7.2 - Fábrica\n\
+		        Telefone\n\
+		        E-mail\n\
+		2.8 - Registros\n\
+		        C.N.P.J:\n\
+		        Inscrição Estadual:\n\
+		        Junta Comercial:\n\
+		Data da Constituição:\n\
+		2.9 - Nº de filiais (se for o caso)\n\
+		        Quantidade:\n\
+		        Endereço da Sede:\n\
+		2.10 - A Missão da Empresa\n\
+			(Qual é realmente seu negócio? Qual sua filosofia de trabalho?)\n\
+		2.11 - Controle do Capital Atual da Empresa (No caso de Cooperativa preencher quadro 2.12).\n', align='J')
+	pdf.ln(5)
+	pdf.cell(63.3,10,'Nome',1,0,'C')
+	pdf.cell(53.3,10,'Nacionalidade',1,0,'C')
+	pdf.cell(73.3,5,'Ações/Quotas',1,1,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+116.6,y)
+	pdf.cell(24.43,5,'Quant.',1,0,'C')
+	pdf.cell(24.43,5,'V.Total.',1,0,'C')
+	pdf.cell(24.43,5,'%',1,1,'C')
+	pdf.set_font('Arial','',10)
+	pdf.cell(63.3,5,'',1,0,'L')
+	pdf.cell(53.3,5,'',1,0,'L')
+	pdf.cell(24.43,5,'',1,0,'L')
+	pdf.cell(24.43,5,'',1,0,'L')
+	pdf.cell(24.43,5,'',1,1,'L')
+	pdf.set_font('Arial','',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'2.12 - Dirigentes da Empresa/COOPERATIVA', align='J')
+	pdf.ln(3)
+	pdf.cell(71.25,5,'NOME E ENDEREÇO',1,0,'C')
+	pdf.cell(23.75,5,'NAC.',1,0,'C')
+	pdf.cell(47.5,5,'CARGO',1,0,'C')
+	pdf.cell(47.5,5,'CPF Nº',1,1,'C')
+	pdf.cell(71.25,5,'',1,0,'C')
+	pdf.cell(23.75,5,'',1,0,'C')
+	pdf.cell(47.5,5,'',1,0,'C')
+	pdf.cell(47.5,5,'',1,1,'C')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'2.13 - Capacidade Empresarial dos Dirigentes\n\
+		(relatar experiencia do empresário)\n\n\
+		2.14 - Regime de Tributação\n\
+		(informar tipo de tributação, se SIMPLES, normal, etc.)\n\n\
+		2.15 - Informar recolhimento de ICMS do último exercício.\n\n\
+		2.16 - Incentivos e/ou Benefícios Fiscais já Existentes (nos âmbitos federal, estadual e municipal, se for o caso).\n\n\
+		2.17 - Financiamento obtido\n\
+		(informar se a empresa possui algum tipo financiamento e valor financiado: BNDES, FNO, ETC).\n\
+		', align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'3 -    PROJETO\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'3.1 - Objetivo do Projeto\n\
+        (Se implantação, modernização, ampliação)\n\n\
+		3.2 - Metas a alcançar\n\
+        (Demonstrar forma de atingir o objetivo do projeto)\n\n\
+	', align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'4 -    LOCALIZAÇÃO\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'4.1 - Aspectos Mercadológicos\n\
+        (Definir público-alvo; localização do empreendimento, etc.)\n\n\
+		4.2 - Aspectos Legais\n\
+        (Verificar se o local é adequado para instalação, ou seja, se está dentro do ZEE ou não)\n\n\
+		4.3 - Aspectos Técnicos e Operacionais\n\
+        (Relatar sobre a matéria-prima, sua localização, fornecedores, dificuldades de obtê-la)\n\n\
+	', align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'5 -    MERCADO\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'  5.1 - O Produto: razões que levaram a produzir estes produtos.\n\n\
+		5.2 - Vantagens dos produtos em relação aos concorrentes\n\n\
+		5.3 - Mercado Consumidor (discriminar principais clientes)\n\n\
+		5.4 - Mercado Concorrente (discriminar principais concorrentes)\n\n\
+		5.5 - Mercado Fornecedor (discriminar principais fornecedores de insumos)\n\n\
+		5.6 - Abrangência do Mercado\n\n\
+	', align='J')
+	pdf.cell(47.5,10,'PRODUTOS',1,0,'C')
+	pdf.cell(142.5,5,'MERCADO (%)',1,1,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+47.5,y)
+	pdf.cell(35.625,5,'Local',1,0,'C')
+	pdf.cell(35.625,5,'Regional',1,0,'C')
+	pdf.cell(35.625,5,'Nacional',1,0,'C')
+	pdf.cell(35.625,5,'Externo',1,1,'C')
+	pdf.cell(47.5,5,'Produto 1',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.multi_cell(190,5,'Obs: Regional, Nacional e Externo, discriminar no rodapé do quadro as localidades.\n\
+		5.7 - Período de Comercialização\n\n',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'6 -    MARKETING\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'Explicar como pretende fazer ou faz para convencer os clientes a comprar da empresa. \
+		pode-se incluir nesse ponto:\n\
+		a) Como tornará ou tornou seus clientes conhecedores da existência de seus produtos ou serviços?\n\n\
+		b) Que mensagem ou pretende utilizar para criar desejo de compra?\n\n\
+		c) Que métodos utiliza ou utilizará para transmitir esta mensagem?\n\n\
+		d) Como irá estruturar suas vendas ou como a estrutura?\n\n\
+	',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'7 -    ASPECTOS TÉCNICOS DA EMPRESA\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'7.1 - Descrição dos Produtos Fabricados.\n\n\
+		7.3 - Descrição da Área Demandada (dimensões, tipo de edificações, etc.)\n\n\
+		7.4 - Descrição da Infra Estrutura de Acesso, Energia e Comunicação.\n\n\
+		7.5 - Utilização da Capacidade Instalada e/ou a Instalar atual e projetada para até dois anos.\n\n\
+		Atual:     ______ %\n\
+		Projetada\n\
+		1º Ano:   ______ %\n\
+		2º Ano    ______ %\n\
+		3º Ano    ______ %\n\n\
+		7.6 - Regime de Trabalho\n\
+		______ horas/dia\n\
+		______ dias por mês\n\
+		______ meses por ano\n\n\
+		7.7 - Imobilizações Existentes. Descrever o imobilizado da empresa a partir de 1º de outubro de 2000\
+		(excluído terreno e veículo de passeio).\n\n\
+		7.8 - Manufatura e Produção\n\
+		Explicar o processo e equipamentos utilizados ou que pretende utilizar para fabricar ou prestar serviços.\
+		Ou seja, fazer um passo a passo do processo utilizado para fabricar ou prestar serviços (o que é feito, quem faz,\
+		o equipamento / imobilizações, o material envolvido, fonte de energia utilizada e sua previsão de demanda,\
+		tratamento dos resíduos e certificações).\n\n\
+		7.8.1 - Previsão de Procedência da Matéria Prima e Material Secundário a serem Utilizados dentro \
+		dos Parâmetros de Desenvolvimento Sustentável\n\
+	',align='J')
+	pdf.set_font('Arial','',10)
+	pdf.cell(31.6,10,'Insumos',1,0,'C')
+	pdf.cell(15.83,10,'Origen',1,0,'C')
+	pdf.cell(15.83,10,'Unid.',1,0,'C')
+	pdf.cell(31.6,10,'Custo Unitário',1,0,'C')
+	pdf.cell(47.43,5,'Atual',1,0,'C')
+	pdf.cell(47.43,5,'Projetada',1,1,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+94.86,y)
+	pdf.cell(23.785,5,'Quant.',1,0,'C')
+	pdf.cell(23.785,5,'Valor',1,0,'C')
+	pdf.cell(23.785,5,'Quant.',1,0,'C')
+	pdf.cell(23.785,5,'Valor',1,1,'C')
+	pdf.cell(31.6,5,'',1,0,'C')
+	pdf.cell(15.83,5,'',1,0,'C')
+	pdf.cell(15.83,5,'',1,0,'C')
+	pdf.cell(31.6,5,'',1,0,'C')
+	pdf.cell(23.785,5,'',1,0,'C')
+	pdf.cell(23.785,5,'',1,0,'C')
+	pdf.cell(23.785,5,'',1,0,'C')
+	pdf.cell(23.785,5,'',1,1,'C')
+	pdf.ln(5)
+	pdf.set_font('Arial','',12)
+	pdf.multi_cell(190,5,'7.8.2 - Necessidade de mão de obra anual',align='J')
+	pdf.ln(5)
+	pdf.set_font('Arial','',10)
+	pdf.cell(47.43,10,'Discriminação/Atividade',1,0,'C')
+	pdf.cell(47.43,10,'Salário Unitário Mensal',1,0,'C')
+	pdf.cell(47.43,5,'Quantidade',1,0,'C')
+	pdf.cell(47.43,5,'Custo Mensal',1,1,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+94.86,y)
+	pdf.cell(23.785,5,'Quant.',1,0,'C')
+	pdf.cell(23.785,5,'Valor',1,0,'C')
+	pdf.cell(23.785,5,'Quant.',1,0,'C')
+	pdf.cell(23.785,5,'Valor',1,1,'C')
+	pdf.cell(47.43,5,'1-Sócios / Prolabore',1,0,'L')
+	pdf.cell(47.43,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,1,'L')
+	pdf.cell(94.86,5,'Sub. Total',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,1,'L')
+	pdf.cell(47.43,5,'2- Mão-de-obra Fixa',1,0,'L')
+	pdf.cell(47.43,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,1,'L')
+	pdf.cell(94.86,5,'Sub. Total',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,1,'L')
+	pdf.cell(47.43,5,'3- Mão-de-obra Variavel',1,0,'L')
+	pdf.cell(47.43,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,1,'L')
+	pdf.cell(94.86,5,'Sub. Total',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,1,'L')
+	pdf.cell(94.86,5,'Total Geral',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,0,'L')
+	pdf.cell(23.785,5,'',1,1,'L')
+	pdf.ln(5)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'7.8.3 - Previsão de Procedência da Energia a ser Consumida no Empreendimento (concessionária\
+		local ou alternativa/própria)\n\n\
+		7.8.4 - Previsão de Utilização de Equipamentos ou Processos Antipoluentes que Resguardem a Proteção do\
+		Meio Ambiente (tratamento, eliminação ou reaproveitamento de resíduos)\n\n\
+		7.8.5 - Quanto à formação de recursos humanos, objetivando a melhoria da qualidade e da produtividade\
+		(política de treinamento anual de funcionários no sentido de aperfeiçoar ou flexibilizar a capacidade de trabalho).\n\n\
+		7.8.6 - Certificados ou Processo/Projeto de Origem de Produção Sustentável\
+	',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'8 -    FATURAMENTO E CUSTOS\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'Preencher o quadro a seguir.',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'8.1 - Modelo do Quadro Estrutura de Custos Totais Anuais\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',10)
+	pdf.cell(47.5,10,'DISCRIMINAÇÃO',1,0,'C')
+	pdf.cell(47.5,10,'ATUAL',1,0,'C')
+	pdf.cell(95,5,'PROJETADO',1,1,'C')
+	x1=pdf.get_x()
+	y1=pdf.get_y()
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+95,y)
+	pdf.cell(47.5,5,'1º ANO',1,0,'C')
+	pdf.cell(47.5,5,'2º ANO',1,1,'C')
+	pdf.multi_cell(47.5,4,'1 - Custos Variáveis\n\
+		- Mão de obra direta\n\
+		- Encargos\n\
+		- Matéria Prima\n\
+		- Materiais Secundários\n\
+		- Utilidades\n\
+		- (Energia Elétrica, vapor, água industrial e potável, combustível)\n\
+		- Mat. auxiliares (se for o caso)\n\
+		- Outros diversos (variar de 2 a 5%, dependendo do tamanho da empresa)\
+	',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+47.5,y1+5)
+	pdf.cell(47.5,56,'',1,0,'C')
+	pdf.cell(47.5,56,'',1,0,'C')
+	pdf.cell(47.5,56,'',1,1,'C')
+	pdf.multi_cell(47.5,5,'TOTAL DOS CUSTOS VARIÁVEIS',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+47.5,y-10)
+	pdf.cell(47.5,10,'',1,0,'C')
+	pdf.cell(47.5,10,'',1,0,'C')
+	pdf.cell(47.5,10,'',1,1,'C')
+	pdf.multi_cell(47.5,4,'2 - Custos Fixos\n\
+		- Mão de obra\n\
+		- Encargos de mão de obra\n\
+		- Manutenção / conservação\n\
+		- Depreciação (prédio, computadores, instalações, máquinas equipamentos do ativo operacional da indústria.)\n\
+		- Outros/Diversos ( 2 a 5%)\
+	',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+47.5,y-48)
+	pdf.cell(47.5,48,'',1,0,'C')
+	pdf.cell(47.5,48,'',1,0,'C')
+	pdf.cell(47.5,48,'',1,1,'C')
+	pdf.multi_cell(47.5,5,'TOTAL DOS CUSTOS FIXOS',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+47.5,y-10)
+	pdf.cell(47.5,10,'',1,0,'C')
+	pdf.cell(47.5,10,'',1,0,'C')
+	pdf.cell(47.5,10,'',1,1,'C')
+	pdf.multi_cell(47.5,10,'TOTAL GERAL',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+47.5,y-10)
+	pdf.cell(47.5,10,'',1,0,'C')
+	pdf.cell(47.5,10,'',1,0,'C')
+	pdf.cell(47.5,10,'',1,1,'C')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'Obs.: Honorários da diretoria - Deverá ser incluído em Despesas Administrativas no\
+		quadro 8.3 - Demonstrativo de Resultados da Empresa', align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'8.2 - Programa Anual de Produção e Vendas.\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',10)
+	pdf.cell(30.5,20,'PRODUTOS',1,0,'C')
+	pdf.cell(23.75,20,'UNID.',1,0,'C')
+	pdf.cell(50.375,15,'ATUAL ANO X',1,0,'C')
+	pdf.cell(85.375,5,'PROJETADA',1,1,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+104.625,y)
+	pdf.cell(33.4583,10,'Quantidade',1,0,'C')
+	pdf.cell(18.4583,15,'Preço Unit.',1,0,'C')
+	pdf.cell(33.4583,10,'Receita',1,1,'C')
+	pdf.set_xy(x+104.625,y+10)
+	pdf.cell(16.72915,5,'Ano 1',1,0,'C')
+	pdf.cell(16.72915,5,'Ano 2',1,1,'C')
+	# pdf.cell(28.4583,5,'Receita',1,1,'C')
+	pdf.set_xy(x+156.5416,y+10)
+	pdf.cell(16.72915,5,'Ano 1',1,0,'C')
+	pdf.cell(16.72915,5,'Ano 2',1,1,'C')
+	pdf.set_xy(x+54.25,y+10)
+	pdf.cell(25.1875,5,'Quantidade',1,0,'C')
+	pdf.cell(25.1875,5,'Receita',1,1,'C')
+	pdf.cell(30.5,20,'',1,0,'L')
+	pdf.cell(23.75,20,'',1,0,'L')
+	pdf.cell(25.1875,20,'',1,0,'L')
+	pdf.cell(25.1875,20,'',1,0,'L')
+	pdf.cell(16.72915,20,'',1,0,'L')
+	pdf.cell(16.72915,20,'',1,0,'L')
+	pdf.cell(18.4583,20,'',1,0,'L')
+	pdf.cell(16.72915,20,'',1,0,'L')
+	pdf.cell(16.72915,20,'',1,1,'L')
+	pdf.set_auto_page_break(auto=True)
+	pdf.add_page('L')
+	pdf.ln(3)
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'8.3 - Demonstrativo de Resultados da Empresa\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',10)
+	pdf.cell(95,10,'DISCRIMINAÇÃO',1,0,'C')
+	pdf.cell(50,10,'PERÍODO BASE',1,0,'C')
+	pdf.cell(130,5,'PROJETADO',1,1,'C')
+	x1=pdf.get_x()
+	y1=pdf.get_y()
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+145,y)
+	pdf.cell(65,5,'1º ANO',1,0,'C')
+	pdf.cell(65,5,'2º ANO',1,1,'C')
+	pdf.cell(95,5,'1 - Receita Operacional Bruta',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'2 - ( - ) Impostos e deduções (Quebras e avarias)',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'3 - ( = ) Receita operacional Líquida',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'4 - ( - ) Custos dos Produtos Vendidos (Custos Industriais)',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'5 - ( = ) Lucro Bruto',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'6 - ( - ) Despesas Operacionais',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'6.1 - Comerciais',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'6.2 - Administrativa',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.multi_cell(95,10,'6.3 - Financeiras\n\
+		*   S/ Operação\n\
+		*   S/ Financiamento\n\
+	',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+95,y-40)
+	pdf.cell(50,30,'',1,0,'L')
+	pdf.cell(65,30,'',1,0,'L')
+	pdf.cell(65,30,'',1,1,'L')
+	pdf.cell(95,5,'7 - ( - ) Amortização do Ativo Deferido',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'8 - ( = ) Resultado Operacional',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'9 - (mais/menos) Resultado Não Operacional',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'10 - ( = ) Lucro Autos do IR',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'11 - ( - )  Previsão p/ o IR',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'12 - ( = ) Resultado ou Lucro do Exercício',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.cell(95,5,'',1,0,'L')
+	pdf.cell(50,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,0,'L')
+	pdf.cell(65,5,'',1,1,'L')
+	pdf.ln(3)
+	pdf.set_auto_page_break(auto=True)
+	pdf.add_page()
+	pdf.set_font('Arial', 'B', 12)
+	pdf.multi_cell(190,5,'9 - O Financiamento\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'9.1 - Linha de Financiamento (Programa)\n\n\
+		9.2 - Valor do Financiamento\n\n\
+		9.3 - Prazo Solicitado\n\n\
+		9.4 - Justificativa da Solicitação\n\n\
+		9.5 - Plano de Aplicação\n\
+	',align='J')
+	pdf.multi_cell(190,5,'9.1 - Linha de Financiamento (Programa)\n\n\
+		9.2 - Valor do Financiamento\n\n\
+		9.3 - Prazo Solicitado\n\n\
+		9.4 - Justificativa da Solicitação\n\n\
+		9.5 - Plano de Aplicação\n\n\
+	',align='J')
+	pdf.set_font('Arial', '',10)
+	pdf.cell(95,5,'DISCRIMINAÇÃO',1,0,'C')
+	pdf.cell(95,5,'VALOR',1,1,'C')
+	pdf.multi_cell(95,5,'  ATIVO FIXO\n\n\
+		1 - Construção Civil\n\
+		2 - Instalações Complementares\n\
+		3 - Máquinas e Equipamentos\n\
+		4 - Equipamentos de Informática\n\
+		5 - Veículos\n\
+		6 - \n\
+		7 - \n\n\
+		CAPITAL DE GIRO\n\
+		DESPESAS PRÉ-OPERACIONAIS\n\n\
+		1 - Elaboração do Projeto\n\
+		2 - Fretes e Carretos\n\
+		3 - \n\
+		4 - \n\
+		Eventuais\
+	',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+95,y-90)
+	pdf.cell(95,90,'',1,1,'C')
+	pdf.cell(95,5,'TOTAL',1,0,'C')
+	pdf.cell(95,5,'',1,1,'C')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'Obs.: Relacionar todos os itens com descrição suscinta.', align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'10 - GARANTIAS\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',12)
+	pdf.multi_cell(190,5,'a) Detalhar os bens a serem oferecidos em garantia  informando os respectivos valores.\n\
+		b) Em caso de terrenos anexar cópia da escritura e registro no Cartório de Imóveis.\n\
+		c) Se edificações, anexar registros de averbações (Prefeitura), registro no Cartório de Imóveis e CND do INSS.\n\
+		d) Se máquinas e equipamentos especificar marca, modelo, nº de série, fornecedor e cópia da nota fiscal.\n\
+		e) Outros - Especificar.\n\
+	',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'11 - Indicadores do Capital de Giro\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',10)
+	pdf.cell(95,5,'DISCRIMINAÇÃO',1,0,'C')
+	pdf.cell(95,5,'INDICADORES - PROJETADO',1,1,'C')
+	pdf.cell(95,5,'1 - USOS',1,0,'L')
+	pdf.cell(95,5,'',1,1,'L')
+	pdf.cell(95,5,'1.2 - Caixa Mínima (Número de Dias)',1,0,'L')
+	pdf.cell(95,5,'',1,1,'L')
+	pdf.multi_cell(95,5,'1.2 - Financiamento de Vendas\n\
+		- Prazo Médio de Financiamento em dias\n\
+		- % de Vendas a prazo\
+	',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+95,y-15)
+	pdf.cell(95,15,'',1,1,'C')
+	pdf.multi_cell(95,5,'1.3 - Estoques\n\
+		1.3.1  - Matéria-prima\n\
+		   - Nº de dias de estoque mínimo\n\
+		1.3.2  - Materiais Secundários\n\
+		   - Nº de dias de estoque mínimo\n\
+		1.3.3	- Material de Embalagem\n\
+		   - Nº de dias de estoque mínimo\n\
+		1.3.4	- Combustíveis e Lubrificantes\n\
+		   - Nº de dias de estoque mínimo\n\
+		1.3.5	- Produtos em Processos\n\
+		   - Nº de dias de estoque mínimo\n\
+		   - Nº de dias efetivo de funcionamento/ano\n\
+		1.3.6	- Produtos Acabados\n\
+		   - Nº de dias de estoque mínimo\n\
+		1.3.7	- Peças e Materiais de Reposição\n\
+		- % sobre total de máquinas e equipamentos\n\
+	',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+95,y-85)
+	pdf.cell(95,85,'',1,1,'C')
+	pdf.cell(95,5,'2 - Fontes',1,0,'L')
+	pdf.cell(95,5,'',1,1,'L')
+	pdf.multi_cell(95,5,'    2.1 - Crédito de Fornecedores\n\
+		- % de compras a prazo\n\
+		- Prazo médio de Pagamento\
+	',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+95,y-15)
+	pdf.cell(95,15,'',1,1,'C')
+	pdf.multi_cell(95,5,'    2.2 - Desconto de Recebíveis\n\
+		- % de compras a prazo\n\
+		- % de descontos\n\
+		- Prazo médio concedido em dias\
+	',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+95,y-20)
+	pdf.cell(95,20,'',1,1,'C')
+	pdf.multi_cell(95,5,'    2.3 - Salários\n\
+		- Prazo médio de Pagamento em dias\
+	',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+95,y-10)
+	pdf.cell(95,10,'',1,1,'C')
+	pdf.multi_cell(95,5,'    2.4 - Impostos e Encargos Sociais\n\
+		- Prazo médio de Recolhimento em dias\
+	',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+95,y-10)
+	pdf.cell(95,10,'',1,1,'C')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'12 - Demonstrativo de Necessidades Financeiras\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',10)
+	pdf.cell(85,5,'DISCRIMINAÇÃO',1,0,'C')
+	pdf.cell(30,5,'PROJETADO',1,0,'C')
+	pdf.cell(40,5,'EXISTENTE BALANÇO',1,0,'C')
+	pdf.cell(30,5,'A RELIZAR',1,1,'C')
+	pdf.multi_cell(85,5,'1 - USOS\n1.1 - Caixa Mínima',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+85,y-10)
+	pdf.cell(30,10,'',1,0,'C')
+	pdf.cell(40,10,'',1,0,'C')
+	pdf.cell(30,10,'',1,1,'C')
+	pdf.cell(85,5,'1.2 - Financiamento de Vendas',1,0,'L')
+	pdf.cell(30,5,'',1,0,'C')
+	pdf.cell(40,5,'',1,0,'C')
+	pdf.cell(30,5,'',1,1,'C')
+	pdf.multi_cell(85,5,'1.3 - ESTOQUES\n\
+		-   Matéria-prima\n\
+		-   Materiais secundários\n\
+		-   Material de embalagem\n\
+		-   Combustíveis e lubrificantes\n\
+		-   Produtos em processos\n\
+		-   Produtos acabados\n\
+		-   Peças e materiais de reposição\
+	',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+85,y-40)
+	pdf.cell(30,40,'',1,0,'C')
+	pdf.cell(40,40,'',1,0,'C')
+	pdf.cell(30,40,'',1,1,'C')
+	pdf.multi_cell(85,5,'2 - FONTES\n2.1 - Crédito de Fornecedores',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+85,y-10)
+	pdf.cell(30,10,'',1,0,'C')
+	pdf.cell(40,10,'',1,0,'C')
+	pdf.cell(30,10,'',1,1,'C')
+	pdf.cell(85,5,'2.2 - Descontos Recebíveis',1,0,'L')
+	pdf.cell(30,5,'',1,0,'C')
+	pdf.cell(40,5,'',1,0,'C')
+	pdf.cell(30,5,'',1,1,'C')
+	pdf.cell(85,5,'2.3 - Salários',1,0,'L')
+	pdf.cell(30,5,'',1,0,'C')
+	pdf.cell(40,5,'',1,0,'C')
+	pdf.cell(30,5,'',1,1,'C')
+	pdf.cell(85,5,'2.5 - Impostos e Encargos Sociais',1,0,'L')
+	pdf.cell(30,5,'',1,0,'C')
+	pdf.cell(40,5,'',1,0,'C')
+	pdf.cell(30,5,'',1,1,'C')
+	pdf.cell(85,5,'3 - CAPITAL DE GIRO',1,0,'L')
+	pdf.cell(30,5,'',1,0,'C')
+	pdf.cell(40,5,'',1,0,'C')
+	pdf.cell(30,5,'',1,1,'C')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'13 - Usos e Fontes do Projeto\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',10)
+	pdf.cell(85,10,'DISCRIMINAÇÃO',1,0,'C')
+	pdf.cell(30,10,'PROJETADO',1,0,'C')
+	pdf.multi_cell(40,5,'REALIZADO ATÉ \n___/___/_____',1,0,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+155,y-10)
+	pdf.cell(30,10,'A RELIZAR',1,1,'C')
+	pdf.multi_cell(85,5,'1 - USOS\n\
+		1.1 - ATIVO FIXO\n\
+		- Terreno\n\
+		- Construção Civil\n\
+		- Instalações Complementares\n\
+		- Máquinas e Equipamentos\n\
+		- Equipamentos de Informática\n\
+		- Móveis e Utensílios\n\
+		- Veículos\n\
+		- 	\
+	',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+85,y-50)
+	pdf.cell(30,50,'',1,0,'C')
+	pdf.cell(40,50,'',1,0,'C')
+	pdf.cell(30,50,'',1,1,'C')
+	pdf.multi_cell(85,5,'1.2 - CAPITAL DE GIRO\n\
+		- Caixa Mínima\n\
+		- Financiamento de Vendas\n\
+		- Matéria-prima\n\
+		- Materiais Secundários\n\
+		- Material de Embalagem\n\
+		- Combustíveis e Lubrificantes\n\
+		- Produtos em Elaboração\n\
+		- Produtos Acabados\n\
+		- Peças e Material de Reposição',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+85,y-50)
+	pdf.cell(30,50,'',1,0,'C')
+	pdf.cell(40,50,'',1,0,'C')
+	pdf.cell(30,50,'',1,1,'C')
+	pdf.multi_cell(85,5,'1.3 - DESPESAS PRÉ-OPERACIONAIS\n\
+		- Elaboração do Projeto\n\
+		- Fretes e Carretos',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+85,y-15)
+	pdf.cell(30,15,'',1,0,'C')
+	pdf.cell(40,15,'',1,0,'C')
+	pdf.cell(30,15,'',1,1,'C')
+	pdf.multi_cell(85,5,'2 - FONTES\n\
+		   2.1 - Programa de Incentivo (especificar)\n\
+		   - Ativo Fixo\n\
+		   - Capital de Giro\n\
+		   - Despesas Pré-operacionais',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+85,y-25)
+	pdf.cell(30,25,'',1,0,'C')
+	pdf.cell(40,25,'',1,0,'C')
+	pdf.cell(30,25,'',1,1,'C')
+	pdf.multi_cell(85,5,'2.2 - Instituição Bancária (especificar)\n\
+		- Ativo Fixo\n\
+		- Capital de Giro\n\
+		- Despesas Pré-operacionais',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+85,y-20)
+	pdf.cell(30,20,'',1,0,'C')
+	pdf.cell(40,20,'',1,0,'C')
+	pdf.cell(30,20,'',1,1,'C')
+	pdf.multi_cell(85,5,'2.3 - Outras Fontes (especificar)\n\
+		- Ativo Fixo\n\
+		- Capital de Giro',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+85,y-15)
+	pdf.cell(30,15,'',1,0,'C')
+	pdf.cell(40,15,'',1,0,'C')
+	pdf.cell(30,15,'',1,1,'C')
+	pdf.multi_cell(85,5,'2.4 - Empresa\n\
+		- Ativo Fixo\n\
+		- Capital de Giro\n\
+		- Despesas Pré-operacionais\n\
+		- ',1,0,'L')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+85,y-25)
+	pdf.cell(30,25,'',1,0,'C')
+	pdf.cell(40,25,'',1,0,'C')
+	pdf.cell(30,25,'',1,1,'C')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.set_auto_page_break(auto=True)
+	pdf.add_page('L')
+	pdf.multi_cell(190,5,'14 - Fluxo de Caixa\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',10)
+	pdf.cell(100,10,'DISCRIMINAÇÃO',1,0,'C')
+	pdf.cell(165,5,'PROJETADO',1,1,'C')
+	x1=pdf.get_x()
+	y1=pdf.get_y()
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+100,y)
+	pdf.cell(55,5,'ATUAL',1,0,'C')
+	pdf.cell(55,5,'1º ANO',1,0,'C')
+	pdf.cell(55,5,'2º ANO',1,1,'C')
+	pdf.cell(100,5,'ENTRADAS',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Receita Operacional',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Financiamento Pretendido',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Recursos Próprios Investido',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Depreciação mais Amortização',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Outros Recursos de Terceiros Investidos',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'SAÍDAS',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Investimentos',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Despesas Operacionais',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Imposto de Renda e Contribuição Social',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Juros Sobre Financiamento Pretendido',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Juros Sobre Financiamento Existentes',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Juros Sobre Financiamento para Capital de Giro',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Amortização do Financiamento Pretendido',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Amortização de Financiamentos Existentes',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Amortização de Financiamentos para Capital de Giro',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'FLUXO DE CAIXA ECONÔMICO',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'FLUXO DE CAIXA OPERACIONAL',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.set_auto_page_break(auto=True)
+	pdf.add_page('L')
+	pdf.cell(100,10,'DISCRIMINAÇÃO',1,0,'C')
+	pdf.cell(165,5,'PROJETADO',1,1,'C')
+	x1=pdf.get_x()
+	y1=pdf.get_y()
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+100,y)
+	pdf.cell(55,5,'ATUAL',1,0,'C')
+	pdf.cell(55,5,'1º ANO',1,0,'C')
+	pdf.cell(55,5,'2º ANO',1,1,'C')
+	pdf.cell(100,5,'ENTRADAS',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Receita Operacional',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Financiamento Pretendido',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Recursos Próprios Investido',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Depreciação mais Amortização',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Outros Recursos de Terceiros Investidos',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'SAÍDAS',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Investimentos',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Despesas Operacionais',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Imposto de Renda e Contribuição Social',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Juros Sobre Financiamento Pretendido',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Juros Sobre Financiamento Existentes',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Juros Sobre Financiamento para Capital de Giro',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Amortização do Financiamento Pretendido',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Amortização de Financiamentos Existentes',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'   Amortização de Financiamentos para Capital de Giro',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'FLUXO DE CAIXA ECONÔMICO',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.cell(100,5,'FLUXO DE CAIXA OPERACIONAL',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,0,'L')
+	pdf.cell(55,5,'',1,1,'L')
+	pdf.set_auto_page_break(auto=True)
+	pdf.add_page()
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'15 - Avaliação do Projeto\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',10)
+	pdf.multi_cell(190,5,'15.1 - Ponto de Nivelamento',align='J')
+	pdf.cell(71.25,10,'DISCRIMINAÇÃO',1,0,'C')
+	pdf.cell(47.5,10,'PERÍODO BASE',1,0,'C')
+	pdf.cell(71.25,5,'PROJEÇÕES',1,1,'C')
+	x=pdf.get_x()
+	y=pdf.get_y()
+	pdf.set_xy(x+118.75,y)
+	pdf.cell(35.625,5,'Ano 1',1,0,'C')
+	pdf.cell(35.625,5,'Ano 2',1,1,'C')
+	pdf.cell(71.25,5,'- Custo Fixo Industrial',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'- Despesa Comercial Fixa',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'- Despesa Administrativa',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'- Despesa Financeira',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'1 - Total de Custo Fixo',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,' - Custo Industrial Variável',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'2 - Total Custo Variável',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'3 - Unidades Produzidas',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'4 - Custo Variavel Unitário',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'5 - Preço Unitário de Venda',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'6 - Margem de Contribuição (5) - (4)',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'7 - Ponto de Equilíbrio (1):(6)',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'8 - Capacidade de Produção',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.cell(71.25,5,'9 - % de Equilíbrio (7):(8)',1,0,'L')
+	pdf.cell(47.5,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,0,'L')
+	pdf.cell(35.625,5,'',1,1,'L')
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'  15.2 - Taxa Interna de Retorno\n\
+		15.3 - Lucratividade\n\
+		15.4 - Rentabilidade\n\
+		15.5 - Tempo de Retorno do Investimento\n\
+		15.6 - Méritos do Projeto\n\
+	',align='J')
+	pdf.set_font('Arial', 'B',12)
+	pdf.ln(3)
+	pdf.multi_cell(190,5,'16 - Planilha de Simulação de Amortização\n',align='J')
+	pdf.ln(3)
+	pdf.set_font('Arial', '',10)
+	pdf.cell(63.33, 5, 'Valor do Financiamento', 1,0,'L')
+	pdf.cell(63.33, 5, '', 1,0,'L')
+	pdf.cell(63.33, 5, '', 1,1,'L')
+	pdf.cell(63.33, 5, 'TJLP', 1,0,'L')
+	pdf.cell(63.33, 5, '0,000%', 1,0,'L')
+	pdf.cell(63.33, 5, 'a.a', 1,1,'L')
+	pdf.cell(63.33, 5, 'Juros(ao ano)', 1,0,'L')
+	pdf.cell(63.33, 5, '0,000%', 1,0,'L')
+	pdf.cell(63.33, 5, 'a.a', 1,1,'L')
+	pdf.cell(63.33, 5, 'Prazo de Carência', 1,0,'L')
+	pdf.cell(63.33, 5, '', 1,0,'L')
+	pdf.cell(63.33, 5, 'meses', 1,1,'L')
+	pdf.cell(63.33, 5, 'Prazo de Amortização', 1,0,'L')
+	pdf.cell(63.33, 5, '', 1,0,'L')
+	pdf.cell(63.33, 5, 'meses', 1,1,'L')
+	pdf.cell(63.33, 5, 'Prazo Total', 1,0,'L')
+	pdf.cell(63.33, 5, '', 1,0,'L')
+	pdf.cell(63.33, 5, 'meses', 0,1,'L')
+	pdf.ln(5)
+	pdf.cell(38,5,'ANO', 1,0,'C')
+	pdf.cell(38,5,'Saldo Devedor', 1,0,'C')
+	pdf.cell(38,5,'Amortização', 1,0,'C')
+	pdf.cell(38,5,'Juros', 1,0,'C')
+	pdf.cell(38,5,'Parcela', 1,1,'C')
+	for i in range(10):
+		for i in range(12):
+			pdf.set_font('Arial', '',10)
+			pdf.cell(38,5,str(i+1), 1,0,'C')
+			pdf.cell(38,5,'', 1,0,'C')
+			pdf.cell(38,5,'', 1,0,'C')
+			pdf.cell(38,5,'', 1,0,'C')
+			pdf.cell(38,5,'', 1,1,'C')
+		pdf.set_font('Arial', '',10)
+		pdf.cell(76,5,'TOTAL ANUAL', 1,0,'C')
+		pdf.cell(38,5,'', 1,0,'C')
+		pdf.cell(38,5,'', 1,0,'C')
+		pdf.cell(38,5,'', 1,1,'C')
+	pdf.set_auto_page_break(auto=True)
+	pdf.add_page()
+	pdf.set_font('Arial', 'B',72)
+	pdf.multi_cell(190,50,'Anexo IV \n\nRoteiro Básico\n Para Plano de \nNegócio',1,align='C')
+	fn = 'download.pdf'
+	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
+	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
+	pdfgerado.headers.set('Content-Type', 'application/pdf')
+	return pdfgerado
