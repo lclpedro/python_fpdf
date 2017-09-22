@@ -30,7 +30,6 @@ def gerarPdfProjeto(cod_projeto):
 	pdf.multi_cell(190, 5, '(Carimbo e assinatura do representante legal)',align='C')
 	pdf.set_font('Arial', 'B', 12)
 	pdf.add_page()
-
 	pdf.multi_cell(180, 5, '\n1. IDENTIFICAÇÃO DO REPRESENTANTE LEGAL',align='L')
 	pdf.set_font('Arial', '', 12)
 	pdf.multi_cell(180,5,'Nome Completo:',1,1,'L',0)
@@ -47,7 +46,6 @@ def gerarPdfProjeto(cod_projeto):
 	pdf.cell(180,5,'E-mail:',1,0,'L',0)
 	pdf.ln(5)
 	pdf.set_font('Arial', 'B', 12)
-
 	pdf.multi_cell(180, 5, '\n2. IDENTIFICAÇÃO DA EMPRESA',align='L')
 	pdf.set_font('Arial', '', 12)
 	pdf.multi_cell(180,5,'Razão Social:',1,0, 'L', 0)
@@ -84,7 +82,6 @@ def gerarPdfProjeto(cod_projeto):
 	pdf.multi_cell(180,5,'Organização Administrativa:',1,0,'L',0)
 	pdf.ln(5)
 	pdf.set_font('Arial', 'B', 12)
-
 	pdf.multi_cell(180, 5, '\n3. INFORMAÇÕES SOBRE O NEGÓCIO',align='L')
 	pdf.set_font('Arial', '', 12)
 	pdf.multi_cell(180,5,'Missão da Empresa:',1,0,'L',0)
@@ -135,7 +132,6 @@ def gerarPdfProjeto(cod_projeto):
 	pdf.cell(90,5,'Total:', 1,0,'L',0)
 	pdf.cell(45,5,'-', 1,0,'L',0)
 	pdf.cell(45,5,'-', 1,1,'L',0)
-	
 	pdf.ln(3)
 	pdf.set_font('Arial', 'B', 12)
 	pdf.multi_cell(180,5,'RECURSOS HUMANOS:', 1,0,'L',0)
@@ -150,7 +146,6 @@ def gerarPdfProjeto(cod_projeto):
 	pdf.set_font('Arial', '', 12)
 	pdf.cell(90,5,'Na fase de Implantação', 1,0,'L',0)
 	pdf.cell(90,5,'Na fase de Operação', 1,1,'L',0)
-
 	pdf.set_font('Arial', 'B', 12)
 	pdf.multi_cell(180, 5, '\n4. ÁREA DEMANDADA (NO CASO DE SOLICITAÇÃO DA LEI 1.359/00)',align='L')
 	pdf.set_font('Arial', '', 12)
@@ -170,7 +165,6 @@ def gerarPdfProjeto(cod_projeto):
 	pdf.cell(60,5,'Dia: ', 1,0,'L',0)
 	pdf.cell(60,5,'Mês: ', 1,0,'L',0)
 	pdf.cell(60,5,'Ano: ', 1,1,'L',0)
-
 	pdf.set_font('Arial', 'B', 12)
 	pdf.multi_cell(180, 5, '\n5. INVESTIMENTOS FIXOS ESTIMADOS (NO CASO DE SOLICITAÇÃO DA LEI 1.358/00)',align='L')
 	pdf.set_font('Arial', '', 12)
@@ -188,7 +182,6 @@ def gerarPdfProjeto(cod_projeto):
 	pdf.cell(60,5,'',1,1,'L',0)
 	pdf.cell(120,5,'Total:',1,0,'L',0)
 	pdf.cell(60,5,'',1,1,'L',0)
-
 	pdf.ln(3)
 	pdf.set_font('Arial', 'B', 12)
 	pdf.multi_cell(180,5,'INVESTIMENTOS TOTAIS PREVISTOS (R$ mil)',1,0,'C',0)
@@ -201,9 +194,7 @@ def gerarPdfProjeto(cod_projeto):
 	pdf.cell(60,5,'',1,1,'L',0)
 	pdf.cell(120,5,'Totais:',1,0,'L',0)
 	pdf.cell(60,5,'',1,1,'L',0)
-
 	pdf.multi_cell(180, 5, '\n7. OUTRAS INFORMAÇÕES',align='L')
-	# pdf.ln(3)
 	pdf.multi_cell(180,5,'Previsão de Consumo e Procedência de Energia Elétrica (Kw/mês) - \
 		Indicar se pretende gerar energia própria/alternativa, como e a quantidade:',border=1,align='L')
 	pdf.ln(3)
@@ -221,15 +212,12 @@ def gerarPdfProjeto(cod_projeto):
 		empresa:',border=1,align='L')
 	pdf.ln(3)
 	pdf.multi_cell(180,5,'Certificados ou Processo/Projeto de Origem de Produção Sustentável:',border=1,align='L')
-
 	pdf.multi_cell(180, 5, '\n8. OUTRAS INFORMAÇÕES',align='L')
 	pdf.multi_cell(180,15,' ',border=1,align='L')
-
 	fn = 'download.pdf'
 	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
 	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
-	pdfgerado.headers.set('Content-Type', 'application/pdf')
-	
+	pdfgerado.headers.set('Content-Type', 'application/pdf')	
 	return pdfgerado
 
 @app.route('/api/processo/capa/<cod_processo>', methods=['GET'])
@@ -238,10 +226,7 @@ def impressaoCapaProcesso(cod_processo):
 		def footer(self):
 			self.set_y(-20)
 			self.set_font('Arial','I', 8)
-			# self.multi_cell(0,10,'Página'+str(self.page_no())+'/{nb}',0,0,'L')
-
 	pdf = PDF()
-	# pdf.alias_nb_pages()
 	pdf.add_page()
 	pdf.set_font('Arial', 'B', 12)
 	pdf.ln(3)
@@ -270,13 +255,10 @@ def impressaoCapaProcesso(cod_processo):
 	pdf.cell(21.1,5,'',1,0,'L')
 	pdf.cell(21.1,5,'',1,0,'L')
 	pdf.cell(63.3,5,'',1,1,'L')
-	
-
 	fn = 'download.pdf'
 	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
 	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
 	pdfgerado.headers.set('Content-Type', 'application/pdf')
-	
 	return pdfgerado
 
 @app.route('/api/documentacao_necessaria/gerarpdf', methods=['GET'])
@@ -285,10 +267,7 @@ def impressaoDocNecessario():
 		def footer(self):
 			self.set_y(-20)
 			self.set_font('Arial','I', 8)
-			# self.multi_cell(0,10,'Página'+str(self.page_no())+'/{nb}',0,0,'L')
-
 	pdf = PDF()
-	# pdf.alias_nb_pages()
 	pdf.add_page()
 	pdf.ln(5)
 	pdf.set_font('Arial', 'B', 16)
@@ -333,12 +312,10 @@ def impressaoDocNecessario():
 	pdf.multi_cell(180,5,'     VIII. Balanço e Demonstrativo de Resultados do último exercício;')
 	pdf.set_font('Arial', 'B', 12)
 	pdf.ln(3)
-
 	fn = 'download.pdf'
 	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
 	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
 	pdfgerado.headers.set('Content-Type', 'application/pdf')
-	
 	return pdfgerado
 
 @app.route('/api/requerimento/gerarpdf', methods=['GET'])
@@ -836,8 +813,7 @@ def parecerTecnico():
 	pdfgerado.headers.set('Content-Type', 'application/pdf')
 	return pdfgerado
 
-
-	@app.route('/api/roteiro', methods=['GET'])
+@app.route('/api/roteiro', methods=['GET'])
 def impressaoRoteiro():
 	class PDF(FPDF):
 		def footer(self):
@@ -1897,6 +1873,194 @@ def impressaoRoteiro():
 	pdf.add_page()
 	pdf.set_font('Arial', 'B',72)
 	pdf.multi_cell(190,50,'Anexo IV \n\nRoteiro Básico\n Para Plano de \nNegócio',1,align='C')
+	fn = 'download.pdf'
+	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
+	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
+	pdfgerado.headers.set('Content-Type', 'application/pdf')
+	return pdfgerado
+
+@app.route('/api/protocolo', methods=['GET'])
+def gerar_protocolo():
+	class PDF(FPDF):
+		def header(self):
+			self.set_font('Arial','', 8)
+	pdf = PDF()
+	pdf.add_page('L')
+	pdf.set_font('Arial','B',10)
+	pdf.multi_cell(270,5,'1. CADASTRO GERAL DE PROCESSOS/EMPRESAS',align='J')
+	pdf.set_font('Arial','',8)
+	pdf.cell(230,5,'PROCESSOS', 1,0,'C')
+	pdf.cell(40,5,'EMPRESAS', 1,1,'C')
+	pdf.cell(15,5,'Nº',1,0,'C')
+	pdf.cell(20,5,'ANO',1,0,'C')
+	pdf.cell(30,5,'Data Início',1,0,'C')
+	pdf.cell(45,5,'Consultor/Responsável',1,0,'C')
+	pdf.cell(30,5,'Espécie',1,0,'C')
+	pdf.cell(30,5,'Benefício',1,0,'C')
+	pdf.cell(30,5,'Status',1,0,'C')
+	pdf.cell(30,5,'Localização',1,0,'C')
+	pdf.cell(40,5,'Razão Social',1,1,'C')
+	pdf.cell(15,5,'',1,0,'C')
+	pdf.cell(20,5,'',1,0,'C')
+	pdf.cell(30,5,'',1,0,'C')
+	pdf.cell(45,5,'',1,0,'C')
+	pdf.cell(30,5,'',1,0,'C')
+	pdf.cell(30,5,'',1,0,'C')
+	pdf.cell(30,5,'',1,0,'C')
+	pdf.cell(30,5,'',1,0,'C')
+	pdf.cell(40,5,'',1,1,'C')
+	pdf.set_auto_page_break(auto=True)
+	pdf.add_page('L')
+	pdf.cell(40,5,'EMPRESAS',1,0,'C')
+	pdf.cell(57.5,5,'REGISTROS',1,0,'C')
+	pdf.cell(57.5,5,'NATUREZA JURÍDICA',1,0,'C')
+	pdf.cell(57.5,5,'ATIVIDADE PRINCIPAL',1,0,'C')
+	pdf.cell(57.5,5,'ABERTURA',1,1,'C')
+	pdf.cell(40,5,'Nome Fantasia',1,0,'C')
+	pdf.cell(28.75,5,'CNPJ',1,0,'C')
+	pdf.cell(28.75,5,'Insc. Estadual',1,0,'C')
+	pdf.cell(15.75,5,'Cód.',1,0,'C')
+	pdf.cell(41.75,5,'Descrição',1,0,'C')
+	pdf.cell(15.75,5,'Cód.',1,0,'C')
+	pdf.cell(41.75,5,'Descrição',1,0,'C')
+	pdf.cell(28.75,5,'Tipo',1,0,'C')
+	pdf.cell(28.75,5,'Data',1,1,'C')
+	pdf.cell(40,5,'',1,0,'C')
+	pdf.cell(28.75,5,'',1,0,'C')
+	pdf.cell(28.75,5,'',1,0,'C')
+	pdf.cell(15.75,5,'',1,0,'C')
+	pdf.cell(41.75,5,'',1,0,'C')
+	pdf.cell(15.75,5,'',1,0,'C')
+	pdf.cell(41.75,5,'',1,0,'C')
+	pdf.cell(28.75,5,'',1,0,'C')
+	pdf.cell(28.75,5,'',1,1,'C')
+	fn = 'download.pdf'
+	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
+	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
+	pdfgerado.headers.set('Content-Type', 'application/pdf')
+	return pdfgerado
+
+@app.route('/api/contatos', methods=['GET'])
+def gerar_contatos():
+	class PDF(FPDF):
+		def header(self):
+			self.set_font('Arial','', 8)
+	pdf = PDF()
+	pdf.add_page('L')
+	pdf.set_font('Arial','B',10)
+	pdf.multi_cell(270,5,'2. CONTATOS NAS EMPRESAS',align='J')
+	pdf.set_font('Arial','',8)
+	pdf.cell(80,5,'EMPRESAS', 1,0,'C')
+	pdf.cell(80,5,'ATIVIDADE PRINCIPAL', 1,0,'C')
+	pdf.cell(110,5,'CONTATOS', 1,1,'C')
+	pdf.cell(40,5,'Razão Social',1,0,'C')
+	pdf.cell(40,5,'Nome Fantasia',1,0,'C')
+	pdf.cell(20,5,'Cód.',1,0,'C')
+	pdf.cell(60,5,'Descrição',1,0,'C')
+	pdf.cell(46.66,5,'Endereço/E-mail',1,0,'C')
+	pdf.cell(26.66,5,'Fone/Fax',1,0,'C')
+	pdf.cell(36.66,5,'Responsável',1,1,'C')
+	pdf.cell(40,5,'',1,0,'C')
+	pdf.cell(40,5,'',1,0,'C')
+	pdf.cell(20,5,'',1,0,'C')
+	pdf.cell(60,5,'',1,0,'C')
+	pdf.cell(46.66,5,'',1,0,'C')
+	pdf.cell(26.66,5,'',1,0,'C')
+	pdf.cell(36.66,5,'',1,1,'C')
+	fn = 'download.pdf'
+	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
+	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
+	pdfgerado.headers.set('Content-Type', 'application/pdf')
+	return pdfgerado
+
+@app.route('/api/lei1361', methods=['GET'])
+def gerar_lei1361():
+	class PDF(FPDF):
+		def header(self):
+			self.set_font('Arial','', 8)
+	pdf = PDF()
+	pdf.add_page('L')
+	pdf.set_font('Arial','B',10)
+	pdf.multi_cell(270,5,'3. MONITORAMENTO PROJETOS DO FUNDO DE DESENVOLVIMENTO SUSTENTÁVEL \
+		- FDS - LEI 1.361/00',align='J')
+	pdf.set_font('Arial','',8)
+	pdf.cell(270,5,'PROCESSOS', 1,1,'C')
+	pdf.cell(10,5,'Nº', 1,0,'C')
+	pdf.cell(15,5,'Ano', 1,0,'C')
+	pdf.cell(20,5,'Tipo', 1,0,'C')
+	pdf.cell(70,5,'Requerente', 1,0,'C')
+	pdf.cell(155,5,'Objeto', 1,1,'C')
+	pdf.cell(10,5,'', 1,0,'C')
+	pdf.cell(15,5,'', 1,0,'C')
+	pdf.cell(20,5,'', 1,0,'C')
+	pdf.cell(70,5,'', 1,0,'C')
+	pdf.cell(155,5,'', 1,1,'C')
+	pdf.set_auto_page_break(auto=True)
+	pdf.add_page('L')
+	pdf.cell(90,5,'RESOLUÇÕES',1,0,'C')
+	pdf.cell(90,5,'DIÁRIO OFICIAL',1,0,'C')
+	pdf.cell(90,5,'RECURSOS',1,1,'C')
+	pdf.cell(10,5,'Nº', 1,0,'C')
+	pdf.cell(25,5,'Data', 1,0,'C')
+	pdf.cell(55,5,'Espécie', 1,0,'C')
+	pdf.cell(45,5,'Nº', 1,0,'C')
+	pdf.cell(45,5,'Data', 1,0,'C')
+	pdf.cell(90,5,'Valor', 1,1,'C')
+	pdf.cell(10,5,'', 1,0,'C')
+	pdf.cell(25,5,'', 1,0,'C')
+	pdf.cell(55,5,'', 1,0,'C')
+	pdf.cell(45,5,'', 1,0,'C')
+	pdf.cell(45,5,'', 1,0,'C')
+	pdf.cell(90,5,'', 1,1,'C')
+	fn = 'download.pdf'
+	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
+	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
+	pdfgerado.headers.set('Content-Type', 'application/pdf')
+	return pdfgerado
+
+@app.route('/api/grafico', methods=['GET'])
+def gerar_grafico():
+	class PDF(FPDF):
+		def header(self):
+			self.set_font('Arial','', 8)
+	pdf = PDF()
+	pdf.add_page('L')
+	pdf.set_font('Arial','B',10)
+	pdf.multi_cell(270,5,'4.1.1 EVOLUÇÃO DA ARRECADAÇÃO DO FUNDO DE DESENVOLVIMENTO SUSTENTÁVEL - FDS',align='J')
+	pdf.multi_cell(90,15,'Valor total Bruto Recolhido ao\nFDS (R$*)', 1,1,'C')
+	pdf.set_font('Arial','B',8)
+	pdf.cell(45,5,'Período', 1,0,'C')
+	pdf.cell(45,5,'Valor (R$)', 1,1,'C')
+	pdf.set_font('Arial','',8)
+	pdf.cell(45,5,'2003', 1,0,'C')
+	pdf.cell(45,5,'-', 1,1,'C')
+	pdf.cell(45,5,'2004', 1,0,'C')
+	pdf.cell(45,5,'-', 1,1,'C')
+	pdf.cell(45,5,'2005', 1,0,'C')
+	pdf.cell(45,5,'28,56', 1,1,'C')
+	pdf.cell(45,5,'2006', 1,0,'C')
+	pdf.cell(45,5,'-', 1,1,'C')
+	pdf.cell(45,5,'2007', 1,0,'C')
+	pdf.cell(45,5,'-', 1,1,'C')
+	pdf.cell(45,5,'2008', 1,0,'C')
+	pdf.cell(45,5,'-', 1,1,'C')
+	pdf.cell(45,5,'2009', 1,0,'C')
+	pdf.cell(45,5,'28,56', 1,1,'C')
+	pdf.cell(45,5,'2010', 1,0,'C')
+	pdf.cell(45,5,'-', 1,1,'C')
+	pdf.cell(45,5,'2011', 1,0,'C')
+	pdf.cell(45,5,'-', 1,1,'C')
+	pdf.cell(45,5,'2012', 1,0,'C')
+	pdf.cell(45,5,'-', 1,1,'C')
+	pdf.cell(45,5,'2013', 1,0,'C')
+	pdf.cell(45,5,'313,2', 1,1,'C')
+	pdf.cell(45,5,'2014', 1,0,'C')
+	pdf.cell(45,5,'721,12', 1,1,'C')
+	pdf.cell(45,5,'2015', 1,0,'C')
+	pdf.cell(45,5,'-', 1,1,'C')
+	pdf.set_font('Arial','B',8)
+	pdf.cell(45,5,'TOTAL', 1,0,'C')
+	pdf.cell(45,5,'1.091,26', 1,1,'C')
 	fn = 'download.pdf'
 	pdfgerado = make_response(u''.join(pdf.output(fn,dest='S')).encode('latin-1'))
 	pdfgerado.headers.set('Content-Disposition', 'attachment', filename=fn)
